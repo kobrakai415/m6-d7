@@ -1,5 +1,4 @@
 import { Router } from "express";
-
 import query from "../../utils/db/index.js";
 
 const route = Router();
@@ -7,7 +6,7 @@ const route = Router();
 route.get("/", async (req, res, next) => {
   try {
     const dbResponse = await query(
-      "SELECT * FROM students ORDER BY created_at DESC"
+      "SELECT * FROM authors ORDER BY created_at DESC"
     );
     res.send(dbResponse);
   } catch (error) {
@@ -18,7 +17,7 @@ route.get("/", async (req, res, next) => {
 route.get("/:id", async (req, res, next) => {
   try {
     const dbResponse = await query(
-      `SELECT * FROM students WHERE student_id=${req.params.id}`
+      `SELECT * FROM authors WHERE id=${req.params.id}`
     );
     res
       .status(dbResponse ? 200 : 404)
@@ -30,9 +29,9 @@ route.get("/:id", async (req, res, next) => {
 
 route.put("/:id", async (req, res, next) => {
   try {
-    const { name, last_name, country, age } = req.body;
+    const { name, surname, avatar, email, DOB } = req.body;
     const dbResponse = await query(
-      `UPDATE  students SET name='${name}',last_name='${last_name}', country='${country}', age=${age} WHERE student_id=${req.params.id} RETURNING *`
+      `UPDATE authors SET name='${name}',surname='${surname}', avatar='${avatar}', email='${email}', DOB='${DOB}' WHERE id=${req.params.id} RETURNING *`
     );
     res.send(dbResponse);
   } catch (error) {
@@ -42,20 +41,20 @@ route.put("/:id", async (req, res, next) => {
 
 route.post("/", async (req, res, next) => {
   try {
-    const { name, last_name, country, age } = req.body;
+    const { name, surname, avatar, email, DOB } = req.body;
     const dbResponse = await query(
-      `INSERT INTO students (name,last_name,country,age) VALUES('${name}', '${last_name}', '${country}', ${age}) RETURNING *`
+      `INSERT INTO authors (name,surname,avatar,email,DOB) VALUES('${name}', '${surname}', '${avatar}', '${email}'. DOB='${DOB}') RETURNING *`
     );
     res.send(dbResponse);
   } catch (error) {
-    res.status(500).send({ error: error.message });
+    res.status(500).send({ error: error.messemail });
   }
 });
 
 route.delete("/:id", async (req, res, next) => {
   try {
     const dbResponse = await query(
-      `DELETE FROM students WHERE student_id=${req.params.id}`
+      `DELETE FROM authors WHERE id=${req.params.id}`
     );
     res.send(dbResponse);
   } catch (error) {
