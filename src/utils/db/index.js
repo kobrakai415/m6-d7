@@ -1,9 +1,5 @@
 import pg from "pg";
 
-// pools will use environment variables
-
-// for connection information
-
 const pool = new pg.Pool();
 
 const query = async (queryText) => {
