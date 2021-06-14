@@ -10,10 +10,6 @@ export default (sequelize, DataTypes) => {
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        category: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-        },
         cover: {
             type: DataTypes.TEXT,
             allowNull: false,

@@ -1,9 +1,10 @@
 import { Router } from "express";
 // import query from "../../utils/db/index.js";
-import models from "../../utils/db/sequelize.js"
+import models from "../../db/sequelize.js"
 
 const Author = models.Author
 const Blog = models.Blog
+const Comment = models.Comment
 
 const route = Router();
 
@@ -17,7 +18,7 @@ route.get("/", async (req, res, next) => {
   //   res.status(500).send({ error });
   // }
   try {
-    const data = await Author.findAll();
+    const data = await Author.findAll({include: [Blog, {model: Comment, include: Blog} ]});
     data.length > 0 ? res.send(data) : res.send("No Data available!")
   } catch (e) {
     console.log(e);
